@@ -85,6 +85,11 @@ pptv下载
 
 	python sohu.py urls...
 
+乐视网下载
+--------
+
+        python letv.py urls...
+
 其他下载
 --------
 
