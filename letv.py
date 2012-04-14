@@ -3,7 +3,7 @@
 __all__ = ['letv_download']
 
 from common import *
-import re,base64,json
+import re, base64, json
 
 #http://www.letv.com/ptv/pplay/5938/1.html
 
@@ -17,13 +17,13 @@ def get_title(s1):
     pos = o1.group(1).rfind(suffix)
     if -1 != pos:
         title = title[:pos]
-    return title
+    return title.decode('utf-8')
     
 def letv_download(url):
     s1 = get_html(url)
     p1 = r'''<div[^<>]*?id=.?j-videoplay.*?<script>.*?{\s*v:[[]["']([^\s]+?)["']'''
     o1 = re.search(p1,s1,re.I|re.S)
-    url1 = o1.group(1)#http://g3.letv.cn/4/34/89/204323373.0.flv?b=269&tag=ios&np=1&vtype=m3u8
+    url1 = o1.group(1) #http://g3.letv.cn/4/34/89/204323373.0.flv?b=269&tag=ios&np=1&vtype=m3u8
     url1 = base64.b64decode(url1)
     prefix = 'http://g3.letv.cn/'
     url1 = url1.replace(prefix,'',1)
@@ -35,12 +35,8 @@ def letv_download(url):
     o2 = json.loads(get_html(url2))
     baseurl = o2['nodelist'][0]['location']
     urls = [] 
-    curr_pos = 0
-    for i,each in enumerate(o2['nodelist']):
-        new_url = baseurl + '&begin=' + str(curr_pos) + '&stop=' +\
-            str(curr_pos + each['gone']) + '&cLoadID=' + str(i+1)
-        curr_pos += each['gone']
-        urls.append(new_url)
+    new_url = baseurl + '&begin=0' + '&cLoadID=-1'
+    urls.append(new_url)
     title = get_title(s1)
     download_urls(urls,title,'flv',total_size=None)
 
