@@ -28,7 +28,7 @@ def tudou_download(url):
 	iid = r1(r'iid\s*[:=]\s*(\d+)', html)
 	assert iid
 	#title = r1(r'title\s*[:=]\s*"([^"]+)"\n', html)
-    title = r1(r'<title>(.*?)</title>', html)
+	title = r1(r'<title>(.*?)</title>', html)
 	assert title
 	title = unescape_html(title)
 	tudou_download_by_iid(iid, title)
