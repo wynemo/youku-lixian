@@ -17,7 +17,7 @@ def get_title(s1):
     pos = o1.group(1).rfind(suffix)
     if -1 != pos:
         title = title[:pos]
-    return title.decode('utf-8')
+    return title.decode('utf-8') #return unicode
     
 def letv_download(url):
     s1 = get_html(url)
